@@ -60,12 +60,12 @@ Rscript run_all.R
 
 ## Stepwise execution
 Alternatively, scripts can be executed step by step:
-Rscript scripts/01_PCA_analysis.R
-Rscript scripts/02_DMR_processing.R
-Rscript scripts/03_plot_Figure1.R
-Rscript scripts/04_plot_Figure2.R
-Rscript scripts/05_plot_Figure3.R
-Rscript scripts/06_plot_Figure4.R
+Rscript scripts/01_processing/DMR_processing.R
+Rscript scripts/02_analysis/PCA_analysis.R
+Rscript scripts/03_figures/plot_Figure1.R
+Rscript scripts/03_figures/plot_Figure2.R
+Rscript scripts/03_figures/plot_Figure3.R
+Rscript scripts/03_figures/plot_Figure4.R
 
 ## Output
 
