@@ -1,4 +1,4 @@
-﻿# =========================================================
+# =========================================================
 # PCA analysis (no plotting)
 # =========================================================
 
@@ -6,15 +6,19 @@ library(data.table)
 # -----------------------------
 # 1. Paths
 # -----------------------------
-data_dir <- "data"
-output_dir <- "results/PCA"
+# PCA输出目录（analysis层）
+output_dir <- file.path(results_analysis_dir, "PCA")
+dir_create_safe(output_dir)
 
-dir.create(output_dir, recursive = TRUE, showWarnings = FALSE)
+# 输入数据（processed）
+CG_file  <- file.path(data_processed_dir,
+                      "PCA_top10000_methylation_matrix_CG.tsv")
 
-# 输入：Figshare提供的数据
-CG_file  <- file.path(data_dir, "PCA_top10000_methylation_matrix_CG.tsv")
-CHG_file <- file.path(data_dir, "PCA_top10000_methylation_matrix_CHG.tsv")
-CHH_file <- file.path(data_dir, "PCA_top10000_methylation_matrix_CHH.tsv")
+CHG_file <- file.path(data_processed_dir,
+                      "PCA_top10000_methylation_matrix_CHG.tsv")
+
+CHH_file <- file.path(data_processed_dir,
+                      "PCA_top10000_methylation_matrix_CHH.tsv")
 
 # -----------------------------
 # 2. PCA function
