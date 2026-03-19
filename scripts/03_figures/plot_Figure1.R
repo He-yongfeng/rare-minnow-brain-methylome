@@ -9,15 +9,19 @@ library(patchwork)
 # -----------------------------
 # 1. Paths
 # -----------------------------
-data_dir <- "data"
-input_dir <- "results/PCA"
-output_dir <- "results/figures"
+data_processed_dir <- "data/processed"
+data_metadata_dir  <- "data/metadata"
+
+results_dir <- "results"
+input_dir   <- file.path(results_dir, "PCA")
+output_dir  <- file.path(results_dir, "figures")
+
 
 dir.create(output_dir, recursive = TRUE, showWarnings = FALSE)
 
-meta_file <- file.path(data_dir, "sample_metadata.tsv")
+meta_file <- file.path(data_metadata_dir, "sample_metadata.tsv")
 
-# PCA½á¹ûÎÄ¼þ
+# PCA结果文件
 CG_pca  <- file.path(input_dir, "PCA_coordinates_PCA_methylation_matrix_CG.tsv")
 CHG_pca <- file.path(input_dir, "PCA_coordinates_PCA_methylation_matrix_CHG.tsv")
 CHH_pca <- file.path(input_dir, "PCA_coordinates_PCA_methylation_matrix_CHH.tsv")
