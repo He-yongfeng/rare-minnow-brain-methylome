@@ -1,15 +1,21 @@
-  # ==========================
+# ==========================
 # 0. Libraries
 # ==========================
 library(dplyr)
 library(data.table)
 
 # ==========================
-# 1. Input
+# 1. Paths
 # ==========================
-data_dir <- "data"
+# 输入（processed data）
+dmr_file <- file.path(data_processed_dir,
+                      "DMR_full_results.tsv")
 
-dmr_file <- file.path(data_dir, "DMR_full_results.tsv")
+# 输出（analysis层）
+output_dir <- file.path(results_analysis_dir, "DMR")
+dir_create_safe(output_dir)
+
+cat("Running DMR processing...\n")
 
 # ==========================
 # 2. Load data
@@ -46,16 +52,16 @@ length_table <- dmr_all %>%
 # ==========================
 # 7. Save outputs
 # ==========================
-write.table(dmr_count,
-file="DMR_summary.tsv",
-sep="\t", row.names=FALSE, quote=FALSE)
+fwrite(
+  dmr_count,
+  file.path(output_dir, "DMR_summary.tsv"),
+  sep = "\t"
+)
 
-write.table(length_table,
-file="DMR_length_table.tsv",
-sep="\t", row.names=FALSE, quote=FALSE)
-
-write.table(dmr_all,
-file="DMR_full_results.tsv",
-sep="\t", row.names=FALSE, quote=FALSE)
+fwrite(
+  length_table,
+  file.path(output_dir, "DMR_length_table.tsv"),
+  sep = "\t"
+)
 
 cat("DMR processing completed.\n")
