@@ -1,3 +1,9 @@
+# NOTE:
+# DMR_summary.tsv is generated from DMR_full_results.tsv
+# using scripts in 01_processing. Make sure to run the
+# processing step before generating Figure 4.
+
+
 # ==========================
 # 0. Libraries
 # ==========================
@@ -11,15 +17,37 @@ library(ggplotify)
 # ==========================
 # 1. Input
 # ==========================
-data_dir <- "data"
+dmr_file <- file.path(
+  data_processed_dir,
+  "DMR_full_results.tsv"
+)
 
-dmr_file <- file.path(data_dir, "DMR_full_results.tsv")
-summary_file <- file.path(data_dir, "DMR_summary.tsv")
-feature_file <- file.path(data_dir, "DMR_feature_summary.tsv")
-gene_file <- file.path(data_dir, "DMR_gene_list.tsv")
+summary_file <- file.path(
+  data_processed_dir,
+  "DMR_summary.tsv"
+)
+
+feature_file <- file.path(
+  data_processed_dir,
+  "DMR_feature_summary.tsv"
+)
+
+gene_file <- file.path(
+  data_processed_dir,
+  "DMR_gene_list.tsv"
+)
 
 # ==========================
-# 2. Load data
+# 2. Check required files
+# ==========================
+
+if (!file.exists(summary_file)) {
+  stop("DMR_summary.tsv not found. Please run DMR processing script first.")
+}
+
+
+# ==========================
+# 3. Load data
 # ==========================
 dmr_all <- read.delim(dmr_file)
 dmr_count <- read.delim(summary_file)
@@ -27,7 +55,7 @@ anno <- read.delim(feature_file)
 gene_data <- read.delim(gene_file)
 
 # ==========================
-# 3. Factor order
+# 4. Factor order
 # ==========================
 dmr_count$Comparison <- factor(
 dmr_count$Comparison,
@@ -40,7 +68,7 @@ levels=c("8m vs 44m","44m vs 74m","8m vs 74m")
 )
 
 # ==========================
-# 4. Figure A
+# 5. Figure A
 # ==========================
 p1 <- ggplot(dmr_count,
 aes(x=Comparison,y=Number,fill=Type))+
@@ -53,7 +81,7 @@ theme_classic()+
 theme(legend.position="top")
 
 # ==========================
-# 5. Figure B
+# 6. Figure B
 # ==========================
 p2 <- ggplot(dmr_all,aes(x=Length))+
 geom_histogram(binwidth=20,
@@ -62,7 +90,7 @@ coord_cartesian(xlim=c(0,1000))+
 theme_classic()
 
 # ==========================
-# 6. Figure C
+# 7. Figure C
 # ==========================
 p3 <- ggplot(anno,
 aes(x=Comparison,y=Number,fill=element))+
@@ -71,7 +99,7 @@ theme_classic()+
 theme(legend.position="top")
 
 # ==========================
-# 7. Figure D (Venn)
+# 8. Figure D (Venn)
 # ==========================
 genes_8_44 <- unique(gene_data$GeneSymbol[gene_data$Comparison=="8m vs 44m"])
 genes_44_74 <- unique(gene_data$GeneSymbol[gene_data$Comparison=="44m vs 74m"])
@@ -94,7 +122,7 @@ scaled=FALSE
 p4 <- as.ggplot(grobTree(venn.grob)) + theme_void()
 
 # =========================
-# 8. Save panels individually
+# 9. Save panels individually
 # ==========================
 
 ggsave(
