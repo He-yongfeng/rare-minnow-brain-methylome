@@ -8,8 +8,10 @@ library(patchwork)
 # ==========================
 # 1. Input
 # ==========================
-data_dir <- "data"
-file_feature <- file.path(data_dir, "feature_methylation_matrix.tsv")
+file_feature <- file.path(
+  data_processed_dir,
+  "feature_methylation_matrix.tsv"
+)
 
 df <- read_tsv(file_feature)
 
